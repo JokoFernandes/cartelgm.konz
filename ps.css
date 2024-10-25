@@ -1,0 +1,108 @@
+body{
+    background-size: cover;
+    background-repeat: no-repeat;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+    background-image: url('https://cdnb.artstation.com/p/assets/images/images/047/517/381/original/inkpendude-portal-calm.gif?1647794880');
+}
+.images {
+    border-radius: 10px;
+    width: 150px;
+    display: flexbox;
+    height: 150px;
+}
+.bgi{
+   display: grid;
+   width: 86%;
+   padding: 4px;
+   border-radius: 10px;
+   background: linear-gradient(rgba(129, 186, 255, 0.542),rgb(94, 167, 255, 0.542),rgb(129, 186, 255, 0.542));
+   border: solid 3px black;
+   grid-template-columns: repeat(2, 1fr); /* Dua kolom */
+   gap: 12px; /* Jarak antara item */
+}
+.bgi:hover{
+    transform: scale(1.1);
+}
+.bgi:active{
+    transform: scale(1.05);
+}
+.pbutton:hover{
+   transform: scale(1.05);
+}
+pbutton:hover{
+    transform: scale(1.05);
+ }
+.list {
+   display: grid;
+   width: 330px;
+   padding: 20px;
+   padding: 8px 8px 8px;
+   border-radius: 20px;
+   grid-template-columns: repeat(2, 1fr); /* Dua kolom */
+   gap: 5px; /* Jarak antara item */
+}
+a {
+    text-decoration: none;
+    text-align: center;
+}
+.textps{
+    color: rgb(0, 0, 0);
+    font-weight: 900;
+    text-align: center;
+    text-decoration: none;
+}
+.pbutton {
+    background: linear-gradient(4deg,rgb(0, 149, 0),rgb(20, 196, 0),rgb(0, 255, 0));
+    width: 150px;
+    padding: 10px 20px;
+    display: flexbox;
+    font-size: large;
+    border-radius: 10px;
+    border: solid black;
+    height: 42px;
+}
+.imgsd {
+    margin-top: -15px;
+    padding: -10px -10px;
+    width: 50px;
+    height: 50px;
+}
+@keyframes joko {
+    0% {
+        color: rgb(9, 255, 0); /* Merah */
+    }
+    33% {
+        color: rgb(0, 208, 255); /* Hijau */
+    }
+    67% {
+        color: rgb(255, 0, 0); /* Biru */
+    }
+    100% {
+        color: rgb(9, 255, 0); /* Kembali ke Merah */
+    }
+  }
+  @keyframes juki {
+    0% {
+        left: 0px; /* Merah */
+        top: 500px;
+    }
+    25% {
+        left: 400px; /* Hijau */
+        top: 250;
+    }
+    50% {
+        left: -0px; /* Biru */
+        top: 0px;
+    }
+    75% {
+        left: -400px; /* Biru */
+        top: 250;
+    }
+    100% {
+        left: -0px; /* Kembali ke Merah */
+        top: 500px;
+    }
+  }
