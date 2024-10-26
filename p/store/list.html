@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar yang Dapat Disimpan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 8px;
+            background: #eaeaea;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .delete-btn, .edit-btn {
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            width: 50px;
+            height: 25px;
+            padding: 5px; /* Ukuran padding diperpendek */
+            cursor: pointer;
+            font-size: 12px; /* Ukuran font lebih kecil */
+        }
+        .edit-btn {
+            background: orange; /* Warna tombol edit */
+            left: 950px;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Daftar Belanja</h2>
+    <input type="text" id="item" placeholder="Account/Items" required>
+    <button onclick="addItem()">Tambah Item</button>
+
+    <h3>Daftar Barang</h3>
+    <ul id="item-list"></ul>
+</div>
+
+<script>
+    const itemList = document.getElementById('item-list');
+
+    // Load items from localStorage on page load
+    window.onload = function() {
+        const items = JSON.parse(localStorage.getItem('items')) || [];
+        items.forEach(item => {
+            addToList(item);
+        });
+    };
+
+    function addItem() {
+        const itemInput = document.getElementById('item');
+        const item = itemInput.value;
+        if (item) {
+            const items = JSON.parse(localStorage.getItem('items')) || [];
+            items.push(item);
+            localStorage.setItem('items', JSON.stringify(items));
+
+            addToList(item);
+            itemInput.value = ''; // Clear input
+        } else {
+            alert('Mohon masukkan nama barang!');
+        }
+    }
+
+    function addToList(item) {
+        const li = document.createElement('li');
+        li.textContent = item;
+
+        // Buat tombol hapus
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Hapus';
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.onclick = function() {
+            removeItem(item, li);
+        };
+
+        // Buat tombol edit
+        const editBtn = document.createElement('button');
+        editBtn.textContent = 'Edit';
+        editBtn.className = 'edit-btn';
+        editBtn.onclick = function() {
+            editItem(item, li);
+        };
+
+        li.appendChild(editBtn);
+        li.appendChild(deleteBtn);
+        itemList.appendChild(li);
+    }
+
+    function editItem(oldItem, li) {
+        const newItem = prompt('Edit nama barang:', oldItem);
+        if (newItem && newItem !== oldItem) {
+            let items = JSON.parse(localStorage.getItem('items')) || [];
+            items = items.map(item => item === oldItem ? newItem : item); // Update item
+            localStorage.setItem('items', JSON.stringify(items)); // Simpan kembali ke localStorage
+
+            li.childNodes[0].textContent = newItem; // Update tampilan UI
+        } else if (!newItem) {
+            alert('Nama barang tidak boleh kosong!');
+        }
+    }
+
+    function removeItem(item, li) {
+        let items = JSON.parse(localStorage.getItem('items')) || [];
+        items = items.filter(i => i !== item); // Hapus item dari array
+        localStorage.setItem('items', JSON.stringify(items)); // Simpan kembali ke localStorage
+        itemList.removeChild(li); // Hapus item dari UI
+    }
+</script>
+
+</body>
+</html>
