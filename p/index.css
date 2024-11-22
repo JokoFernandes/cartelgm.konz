@@ -17,10 +17,10 @@ body{
     border: solid 3px rgb(0, 0, 0);
     border-radius: 10%;
     background: rgb(128, 249, 255);
-    height: 210px;
+    height: 180px;
 }
 .imge{
-    border-radius: 10%;
+    border-radius: 9.5%;
     width: 188px;
     border: solid 1.8px rgb(0, 0, 0);
     height: 188px;
@@ -49,7 +49,7 @@ body{
     color: rgb(15, 0, 131);
     border-radius: 11px;
     font-size: 28px;
-    left: 0.8px;
+    left: 2.2px;
     width: auto;
     position: relative;
     top: -30px;
