@@ -81,7 +81,7 @@ body{
   left: -30.5px;
   font-family: 'Arial';
   background-image: linear-gradient(rgb(74, 0, 193), rgb(0, 72, 255));
-  padding: 10px 20px;
+  padding: 10px 35px;
   border: solid black 3px;
   border-radius: 5px;
   cursor: pointer;
