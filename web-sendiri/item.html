@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Pembuat HTML</title>
+    <style>
+        /* Gaya CSS umum untuk halaman */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label, input, textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        textarea {
+            height: 150px;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Membuat File HTML Baru</h1>
+
+        <form id="htmlForm">
+            <label for="title">Judul Halaman HTML</label>
+            <input type="text" id="title" placeholder="Masukkan Judul" required>
+
+            <label for="content">Konten HTML</label>
+            <textarea id="content" placeholder="Masukkan Konten HTML" required></textarea>
+
+            <button type="button" class="btn" onclick="generateHTML()">Buat dan Unduh HTML</button>
+        </form>
+    </div>
+
+    <script>
+        const express = require('express');
+const fs = require('fs');
+const path = require('path');
+const bodyParser = require('body-parser');
+
+const app = express();
+const port = 3000;
+
+// Middleware untuk membaca data JSON dan form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Endpoint untuk menangani form dan menyimpan file HTML
+app.post('/simpan_html', (req, res) => {
+    const { title, content } = req.body;
+
+    // Buat konten HTML
+    const htmlContent = `
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${title}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>${title}</h1>
+    <div>
+        ${content}
+    </div>
+</body>
+</html>
+    `;
+
+    // Tentukan jalur untuk menyimpan file
+    const filePath = path.join(__dirname, 'html_files', `${title}.html`);
+
+    // Simpan file ke server
+    fs.writeFile(filePath, htmlContent, (err) => {
+        if (err) {
+            return res.status(500).send('Gagal menyimpan file.');
+        }
+        res.send('File berhasil disimpan di server!');
+    });
+});
+
+// Jalankan server
+app.listen(port, () => {
+    console.log(`Server berjalan di http://localhost:${port}`);
+});

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Kustomisasi - Judul, Nama, Deskripsi, dan Gambar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .input-container {
+            margin-bottom: 30px;
+        }
+        .input-container input, .input-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .input-container input {
+            height: 40px;
+        }
+        .input-container textarea {
+            height: 100px;
+        }
+        .slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .slide {
+            min-width: 100%;
+            max-width: 100%;
+        }
+        .slide img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Halaman Kustomisasi</h1>
+
+        <!-- Form untuk mengubah judul, nama, dan deskripsi -->
+        <div class="input-container">
+            <label for="judul">Judul:</label>
+            <input type="text" id="judul" placeholder="Masukkan judul baru">
+
+            <label for="nama">Nama:</label>
+            <input type="text" id="nama" placeholder="Masukkan nama baru">
+
+            <label for="deskripsi">Deskripsi:</label>
+            <textarea id="deskripsi" placeholder="Masukkan deskripsi baru"></textarea>
+
+            <button class="button" onclick="ubahKonten()">Ubah Konten</button>
+        </div>
+
+        <!-- Tempat menampilkan judul, nama, dan deskripsi -->
+        <h2 id="judulTampil">Judul Default</h2>
+        <h3 id="namaTampil">Nama Default</h3>
+        <p id="deskripsiTampil">Deskripsi default. Anda dapat mengubahnya melalui form di atas.</p>
+
+        <!-- Slider Gambar -->
+        <div class="slider-container">
+            <div class="slides" id="slides">
+                <div class="slide"><img src="https://via.placeholder.com/800x400?text=Gambar+1" alt="Gambar 1"></div>
+                <div class="slide"><img src="https://via.placeholder.com/800x400?text=Gambar+2" alt="Gambar 2"></div>
+                <div class="slide"><img src="https://via.placeholder.com/800x400?text=Gambar+3" alt="Gambar 3"></div>
+            </div>
+        </div>
+
+        <!-- Tombol untuk mengubah gambar -->
+        <div class="buttons">
+            <button class="button" onclick="prevSlide()">Sebelumnya</button>
+            <button class="button" onclick="nextSlide()">Berikutnya</button>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi untuk mengubah judul, nama, dan deskripsi
+        function ubahKonten() {
+            var judulBaru = document.getElementById('judul').value;
+            var namaBaru = document.getElementById('nama').value;
+            var deskripsiBaru = document.getElementById('deskripsi').value;
+
+            // Memperbarui konten pada halaman
+            if (judulBaru.trim() !== "") {
+                document.getElementById('judulTampil').textContent = judulBaru;
+            }
+            if (namaBaru.trim() !== "") {
+                document.getElementById('namaTampil').textContent = namaBaru;
+            }
+            if (deskripsiBaru.trim() !== "") {
+                document.getElementById('deskripsiTampil').textContent = deskripsiBaru;
+            }
+        }
+
+        // Slider Gambar
+        var currentSlide = 0;
+        var slides = document.getElementById('slides');
+        var totalSlides = slides.children.length;
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+            } else {
+                currentSlide = 0;
+            }
+            updateSlidePosition();
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+            } else {
+                currentSlide = totalSlides - 1;
+            }
+            updateSlidePosition();
+        }
+
+        function updateSlidePosition() {
+            slides.style.transform = 'translateX(' + (-currentSlide * 100) + '%)';
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+body {
+    background: url('https://mir-s3-cdn-cf.behance.net/project_modules/fs/9bc27292880429.5e569ff84e4d0.gif');
+    background-repeat: no-repeat;
+    width: max-content;
+    height: max-content;
+    justify-content: center;
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+.title {
+    position: relative;
+    display: flexbox;
+    font-weight: 700;
+    margin-top: 10px;
+    left: 0px;
+    top: -30px;
+    font-family: 'Arial';
+    color: rgb(238, 238, 238);
+    background-image: url('');
+    background-repeat: no-repeat;
+    width: max-content;
+    height: max-content;
+}
+.item {
+    width: 100.1px;
+    border: solid 2px black;
+    background: red;
+    height: 130px;
+    display: flex;
+    top: 200px;
+    position: relative;
+}
+.images {
+    width: 100px;
+    height: 100px;
+    position: relative;
+}
+.list{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Membuat 3 kolom */
+    gap: 5px; /* Jarak antar item */
+    position: relative;
+    left: -325px;
+    width: 1075px;
+    top: 125px;
+}
