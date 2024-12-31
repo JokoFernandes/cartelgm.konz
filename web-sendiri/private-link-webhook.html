@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirim Pesan dan Gambar ke Discord melalui Webhook</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label, textarea, input {
+            margin-bottom: 10px;
+            display: block;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            font-family: monospace;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+        }
+        button {
+            background-color: #25b22a;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #35da3d;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kirim Pesan dan Gambar ke Discord melalui Webhook</h1>
+    <form id="webhookForm">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" placeholder="Title" required><br>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" placeholder="Text: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident velit odio neque aspernatur adipisci at, dolorem facere illo laboriosam placeat dolorum nobis cupiditate vitae ratione error? Tempore cupiditate aliquid quo?" required></textarea><br>
+
+        <label for="image">Image URL (Opsional):</label>
+        <input type="url" id="image" name="image" placeholder="https://example.com/image.jpg"><br>
+
+        <label for="linkText">Link Text (opsional):</label>
+        <input type="text" id="linkText" name="linkText" placeholder="Link Text"><br>
+
+        <label for="link">URL (opsional):</label>
+        <input type="url" id="link" name="link" placeholder="URL"><br>
+
+        <label for="color">Embeds Color (Hex, example: #FF5733):</label>
+        <input type="text" id="color" name="color" placeholder="Color Example: #FFFFFF"><br><br>
+        
+        <button type="submit">Send Message</button>
+    </form>
+
+    <script>
+        // Ganti dengan URL webhook yang kamu dapatkan dari Discord
+        const webhookURL = "https://discord.com/api/webhooks/1323707313017716777/XK-TA91HPf-OQ6Tmg_rW5dQn2hQ9KA7KYgfaPvxcUHRe-oaXhAa-S_tppu2ZKo_eeUzM";
+
+        document.getElementById("webhookForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Ambil nilai judul, pesan, URL gambar, URL link, teks link, dan warna dari input form
+            const title = document.getElementById("title").value;
+            const message = document.getElementById("message").value;
+            const imageURL = document.getElementById("image").value; // URL gambar
+            const linkURL = document.getElementById("link").value; // URL link
+            const linkText = document.getElementById("linkText").value; // Teks kustom untuk link
+            const hexColor = document.getElementById("color").value; // Kode warna Hexadecimal
+
+            // Validasi input
+            if (!title || !message) {
+                alert("Judul dan Pesan harus diisi.");
+                return;
+            }
+
+            // Validasi format kode warna Hex (harus dimulai dengan # diikuti 6 karakter hex)
+            const colorRegex = /^#[0-9A-Fa-f]{6}$/;
+            let embedColor = "#0f02c2";  // Default color green
+
+            if (hexColor && colorRegex.test(hexColor)) {
+                embedColor = hexColor;  // Menggunakan warna yang dimasukkan oleh pengguna
+            } else if (hexColor) {
+                alert("Format kode warna tidak valid. Pastikan kode warna diawali dengan # dan terdiri dari 6 karakter.");
+                return;
+            }
+
+            // Data yang akan dikirim ke webhook (menggunakan embed untuk pesan)
+            const data = {
+                content: "",  // Kosongkan untuk tidak mengirim pesan teks biasa
+                embeds: [
+                    {
+                        title: title,  // Judul embed
+                        description: message,  // Pesan utama
+                        color: parseInt(embedColor.replace('#', ''), 16),  // Mengonversi Hex ke Decimal
+                        image: imageURL ? { url: imageURL } : undefined,  // Hanya tambahkan gambar jika URL gambar diisi
+                    }
+                ]
+            };
+
+            // Jika URL link diisi, tambahkan ke dalam fields embed dengan teks kustom
+            if (linkURL) {
+                const displayText = linkText || "Klik untuk membuka link";  // Gunakan teks kustom atau default
+                data.embeds[0].fields = [{
+                    name: "",  // Nama field link
+                    value: `[${displayText}](${linkURL})`,  // Link yang akan ditampilkan dengan teks kustom
+                    inline: false  // Tidak inline, tampilkan di bawah pesan utama
+                }];
+            }
+
+            // Kirim request POST ke webhook Discord
+            fetch(webhookURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Pesan dan gambar berhasil dikirim:", data);
+                alert("Pesan dan gambar berhasil dikirim!");
+                // Clear form after successful submission
+                document.getElementById("webhookForm").reset();
+            })
+            .catch((error) => {
+                console.error("Memuat:", error);
+                alert("Mengirim pesan.");
+                document.getElementById("webhookForm").reset();
+            });
+        });
+    </script>
+</body>
+</html>
